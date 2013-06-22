@@ -12,5 +12,6 @@ int main(int argc, char **argv)
     std::cout << bloquePrograma << std::endl;
     ContextoGeneracion context;
     context.generarCodigo(*bloquePrograma);
+    context.generarSite();
     return 0;
 }
