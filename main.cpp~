@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
     yyparse();
     std::cout << bloquePrograma << std::endl;
-    ContextoGeneracion context;
-    context.generarCodigo(*bloquePrograma);
+    CodeGenContext context;
+    context.generateCode(*bloquePrograma);
     return 0;
 }
