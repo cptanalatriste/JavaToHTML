@@ -48,6 +48,10 @@ std::string* InvocacionFuncion::generarCodigo(ContextoGeneracion& context)
     //TODO: Validar que la función haya sido declarada.
 	std::string *result = new std::string("");
 	std::cout << "Creando invocación a función: " << id.name << endl;
+    ListadoExpresiones::const_iterator it;
+    for (it = arguments.begin(); it != arguments.end(); it++) {
+        (**it).generarCodigo(context);
+    }
 	return result;
 }
 
@@ -56,6 +60,7 @@ std::string* Asignacion::generarCodigo(ContextoGeneracion& context)
     //TODO: Validar si la variable ha sido declarada.
 	std::cout << "Creando una asignación para " << lhs.name << endl;
 	std::string *result = new std::string("");
+    rhs.generarCodigo(context);
 	return result;
 }
 
@@ -69,6 +74,10 @@ std::string* DeclaracionVariable::generarCodigo(ContextoGeneracion& context)
 {
 	std::cout << "Creando una declaración de variable para " << type.name << " " << id.name << endl;
 	std::string *result = new std::string("");
+	if (assignmentExpr != NULL) {
+        Asignacion assn(id, *assignmentExpr);
+        assn.generarCodigo(context);
+    }
 	return result;
 }
 
