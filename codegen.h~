@@ -1,9 +1,0 @@
-#include <typeinfo>
-
-class Bloque;
-
-class CodeGenContext {
-
-public:      
-    void generateCode(Bloque& root);    
-};
