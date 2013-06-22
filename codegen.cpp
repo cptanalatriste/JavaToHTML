@@ -46,7 +46,7 @@ std::string* Identificador::generarCodigo(ContextoGeneracion& context)
 std::string* InvocacionFuncion::generarCodigo(ContextoGeneracion& context)
 {
 	std::string *result = new std::string("");
-	std::cout << "Creating invocación a función: " << id.name << endl;
+	std::cout << "Creando invocación a función: " << id.name << endl;
 	return result;
 }
 
