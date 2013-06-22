@@ -9,7 +9,6 @@ void ContextoGeneracion::generarCodigo(Bloque& root)
 	std::cout << "Generando código...\n";
 	root.generarCodigo(*this);
 	std::cout << "El código se ha generado.\n";
-
 }
 
 void ContextoGeneracion::generarSite()
@@ -37,14 +36,16 @@ std::string* Entero::generarCodigo(ContextoGeneracion& context)
 	return result;
 }
 
-std::string* Identificador::generarCodigo(ContextoGeneracion& context)
-{
+std::string* Identificador::generarCodigo(ContextoGeneracion& context){
+    //TODO: Validar si la variable ha sido declarada.
 	std::string *result = new std::string("");
+	std::cout << "Creando referencia a identificador: " << name << endl;
 	return result;
 }
 
 std::string* InvocacionFuncion::generarCodigo(ContextoGeneracion& context)
 {
+    //TODO: Validar que la función haya sido declarada.
 	std::string *result = new std::string("");
 	std::cout << "Creando invocación a función: " << id.name << endl;
 	return result;
@@ -52,6 +53,8 @@ std::string* InvocacionFuncion::generarCodigo(ContextoGeneracion& context)
 
 std::string* Asignacion::generarCodigo(ContextoGeneracion& context)
 {
+    //TODO: Validar si la variable ha sido declarada.
+	std::cout << "Creando una asignación para " << lhs.name << endl;
 	std::string *result = new std::string("");
 	return result;
 }
@@ -64,6 +67,7 @@ std::string* ExpresionSentencia::generarCodigo(ContextoGeneracion& context)
 
 std::string* DeclaracionVariable::generarCodigo(ContextoGeneracion& context)
 {
+	std::cout << "Creando una declaración de variable para " << type.name << " " << id.name << endl;
 	std::string *result = new std::string("");
 	return result;
 }
