@@ -26,7 +26,7 @@
 %token <token> IPARENTESIS DPARENTESIS ILLAVE DLLAVE COMA
 
 %type <identificador> identificador
-%type <expresion> numerico expresion 
+%type <expresion> cadena numerico expresion 
 %type <listaDeclaraciones> func_argumentos
 %type <listaExpresiones> inv_argumentos
 %type <bloque> programa sentencias bloque
@@ -67,6 +67,9 @@ func_argumentos : /*blank*/  { $$ = new ListadoDeclaraciones(); }
 identificador : IDENTIFICADOR { $$ = new Identificador(*$1); delete $1; }
       ;
 
+cadena : CADENA { $$ = new Cadena(*$1); delete $1; }
+      ;
+
 numerico : ENTERO { $$ = new Entero(atol($1->c_str())); delete $1; }
         | DECIMAL { $$ = new Decimal(atof($1->c_str())); delete $1; }
         ;
@@ -75,6 +78,7 @@ expresion : identificador IGUAL expresion { $$ = new Asignacion(*$<identificador
      | identificador IPARENTESIS inv_argumentos DPARENTESIS { $$ = new InvocacionFuncion(*$1, *$3); delete $3; }
      | identificador { $<identificador>$ = $1; }
      | numerico
+     | cadena
      | IPARENTESIS expresion DPARENTESIS { $$ = $2; }
      ;
     

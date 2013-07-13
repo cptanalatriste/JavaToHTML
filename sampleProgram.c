@@ -1,14 +1,17 @@
 void configurar() {
-	definirTitulo(variableTitulo)
+	definirTitulo("Titulo del formulario")
+	definirHojaDeEstilos("style.css")
+
+	Parrafo parrafo 
+	parrafo = generarParrafo("Este parrafo contiene las instrucciones del formulario")
+
 	CajaTexto cajaTextoNombre
-	cajaTextoNombre = generarCajaTexto(variableNombreCaja, variableEsObligatorioCaja, 
-		variableEsAlfanumericoCaja, variableClaseCaja)
+	cajaTextoNombre = generarCajaTexto("idTexto", "Caja de Texto")
 
 	Boton botonEnviar
-	botonEnviar = generarBoton(variableNombreBoton, variableClaseCaja)
+	botonEnviar = generarBoton("Enviar")
 
-	definirHojaDeEstilos(variableHojaEstilos)
-	definirPosicion(variablePosicion)
+	agregarElemento(parrafo)
 	agregarElemento(cajaTextoNombre)
 	agregarElemento(botonEnviar)
 }

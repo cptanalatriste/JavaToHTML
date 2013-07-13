@@ -2,6 +2,7 @@
 #include <vector>
 
 class ContextoGeneracion;
+class ElementoHTML;
 class Sentencia;
 class Expresion;
 class DeclaracionVariable;
@@ -13,7 +14,7 @@ typedef std::vector<DeclaracionVariable*> ListadoDeclaraciones;
 class Nodo {
 public:
     virtual ~Nodo() {}
-    virtual std::string* generarCodigo(ContextoGeneracion& context) { }
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context) { }
 };
 
 class Expresion : public Nodo {
@@ -26,20 +27,28 @@ class Entero : public Expresion {
 public:
     long long value;
     Entero(long long value) : value(value) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class Decimal : public Expresion {
 public:
     double value;
     Decimal(double value) : value(value) { }
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
+};
+
+class Cadena : public Expresion {
+public:
+    std::string value;
+    Cadena(const std::string& value) : value(value) { }
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class Identificador : public Expresion {
 public:
     std::string name;
     Identificador(const std::string& name) : name(name) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class InvocacionFuncion : public Expresion {
@@ -49,7 +58,7 @@ public:
     InvocacionFuncion(const Identificador& id, ListadoExpresiones& arguments) :
         id(id), arguments(arguments) { }
     InvocacionFuncion(const Identificador& id) : id(id) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class Asignacion : public Expresion {
@@ -58,14 +67,14 @@ public:
     Expresion& rhs;
     Asignacion(Identificador& lhs, Expresion& rhs) : 
         lhs(lhs), rhs(rhs) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class Bloque : public Expresion {
 public:
     ListadoSentencias statements;
     Bloque() { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class ExpresionSentencia : public Sentencia {
@@ -73,7 +82,7 @@ public:
     Expresion& expression;
     ExpresionSentencia(Expresion& expression) : 
         expression(expression) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class DeclaracionVariable : public Sentencia {
@@ -85,7 +94,7 @@ public:
         type(type), id(id) { }
     DeclaracionVariable(const Identificador& type, Identificador& id, Expresion *assignmentExpr) :
         type(type), id(id), assignmentExpr(assignmentExpr) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
 
 class DeclaracionFuncion : public Sentencia {
@@ -97,5 +106,5 @@ public:
     DeclaracionFuncion(const Identificador& type, const Identificador& id, 
             const ListadoDeclaraciones& arguments, Bloque& block) :
         type(type), id(id), arguments(arguments), block(block) { }
-    virtual std::string* generarCodigo(ContextoGeneracion& context);
+    virtual ElementoHTML* generarCodigo(ContextoGeneracion& context);
 };
